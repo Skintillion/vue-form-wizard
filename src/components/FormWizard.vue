@@ -221,6 +221,7 @@
         return {
           backgroundColor: this.color,
           width: `${this.progress}%`,
+          marginLeft: `${this.stepPercentage}%`,
           color: this.color
         }
       },
@@ -234,11 +235,11 @@
       progress () {
         let percentage = 0
         if (this.activeTabIndex > 0) {
-          let stepsToAdd = 1
+          let stepsToAdd = 0
           let stepMultiplier = 2
           percentage = this.stepPercentage * ((this.activeTabIndex * stepMultiplier) + stepsToAdd)
         } else {
-          percentage = this.stepPercentage
+          0
         }
         return percentage
       }

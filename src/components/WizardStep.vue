@@ -1,6 +1,13 @@
 <template>
   <li :class="{active:tab.active}">
     <a href="javascript:void(0)" :class="{disabled: !tab.checked}">
+      <slot name="title">
+        <span class="stepTitle"
+              :class="{active:tab.active, has_error:tab.validationError}"
+              :style="tab.active ? stepTitleStyle : {}">
+              {{tab.title}}
+        </span>
+      </slot>
       <div class="wizard-icon-circle md"
            role="tab"
            :tabindex="tab.checked ? 0 : ''"
@@ -26,15 +33,7 @@
               <i v-if="!tab.active && !tab.icon" class="wizard-icon">{{index + 1}}</i>
             </slot>
         </transition>
-
       </div>
-      <slot name="title">
-        <span class="stepTitle"
-              :class="{active:tab.active, has_error:tab.validationError}"
-              :style="tab.active ? stepTitleStyle : {}">
-              {{tab.title}}
-        </span>
-      </slot>
     </a>
   </li>
 </template>
