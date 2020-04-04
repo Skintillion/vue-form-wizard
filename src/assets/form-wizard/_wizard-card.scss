@@ -147,4 +147,12 @@
 
     }
   }
+  .row.wizard-display-flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .row.wizard-display-flex > [class*='col-'] {
+    flex-grow: 1;
+  }
 }

@@ -11,6 +11,7 @@
   "typings": "types/index.d.ts",
   "homepage": "https://github.com/cristijora/vue-form-wizard",
   "scripts": {
+    "watch": "npm-watch",
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "cross-env FULL_BUNDLE=false webpack -p --progress --config webpack.build.config.js",
@@ -20,6 +21,14 @@
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx,vue,scss"
+    }
   },
   "keywords": [
     "vue",
@@ -119,5 +128,7 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "npm-watch": "^0.6.0"
+  }
 }

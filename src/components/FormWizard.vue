@@ -8,26 +8,40 @@
       </slot>
     </div>
     <div class="wizard-navigation">
-      <div class="wizard-progress-with-circle" v-if="!isVertical">
-        <div class="wizard-progress-bar"
-             :style="progressBarStyle"></div>
+      <div class="row wizard-display-flex">
+        <div class="col-md-2 text-center">
+          <slot name="logo">
+            Logo
+          </slot> 
+        </div>
+        <div class="col-md-8">
+          <div class="wizard-progress-with-circle" v-if="!isVertical">
+            <div class="wizard-progress-bar"
+                :style="progressBarStyle"></div>
+          </div>
+          <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+            <slot name="step" v-for="(tab, index) in tabs"
+                  :tab="tab"
+                  :index="index"
+                  :navigate-to-tab="navigateToTab"
+                  :step-size="stepSize"
+                  :transition="transition">
+              <wizard-step :tab="tab"
+                          :step-size="stepSize"
+                          @click.native="navigateToTab(index)"
+                          @keyup.enter.native="navigateToTab(index)"
+                          :transition="transition"
+                          :index="index">
+              </wizard-step>
+            </slot>
+          </ul>
+        </div>
+        <div class="col-md-2 text-center">
+          <slot name="button">
+            Button
+          </slot> 
+        </div>
       </div>
-      <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
-        <slot name="step" v-for="(tab, index) in tabs"
-              :tab="tab"
-              :index="index"
-              :navigate-to-tab="navigateToTab"
-              :step-size="stepSize"
-              :transition="transition">
-          <wizard-step :tab="tab"
-                       :step-size="stepSize"
-                       @click.native="navigateToTab(index)"
-                       @keyup.enter.native="navigateToTab(index)"
-                       :transition="transition"
-                       :index="index">
-          </wizard-step>
-        </slot>
-      </ul>
       <div class="wizard-tab-content">
         <slot v-bind="slotProps">
         </slot>
