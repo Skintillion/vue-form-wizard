@@ -17,8 +17,6 @@
       position: relative;
       @if $font-size > 5px {
         top: $computed-font-size;
-      } @else {
-        top: $computed-font-size * 3.2;
       }
       height: 2px;
     }
