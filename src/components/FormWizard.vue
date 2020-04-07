@@ -16,6 +16,8 @@
         </div>
         <div class="col-md-8">
           <div class="wizard-progress-with-circle" v-if="!isVertical">
+            <div class="wizard-progress-bar wizard-progress-bar-back"
+                :style="progressBarBackStyle"></div>
             <div class="wizard-progress-bar"
                 :style="progressBarStyle"></div>
           </div>
@@ -216,6 +218,17 @@
       },
       stepPercentage () {
         return 1 / (this.tabCount * 2) * 100
+      },
+      lastStepPercentage () {
+        return (this.tabCount+1) * this.stepPercentage;
+      },
+      progressBarBackStyle () {
+        return {
+          backgroundColor: '#CCC',
+          width: `${this.lastStepPercentage}%`,
+          marginLeft: `${this.stepPercentage}%`,
+          color: '#CCC'
+        }
       },
       progressBarStyle () {
         return {

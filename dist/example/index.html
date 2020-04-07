@@ -30,8 +30,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
     <script src="./vue-form-wizard.js"></script>
     <script >
+      Vue.config.devtools = true
+      
       Vue.use(VueFormWizard)
-      new Vue({
+      
+      let myApp = new Vue({
         el: '#app',
         methods: {
             onComplete: function(){
