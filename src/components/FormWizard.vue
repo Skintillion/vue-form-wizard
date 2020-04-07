@@ -220,7 +220,8 @@
         return 1 / (this.tabCount * 2) * 100
       },
       lastStepPercentage () {
-        return (this.tabCount+1) * this.stepPercentage;
+        let stepMultiplier = 2
+        return this.stepPercentage * (this.tabCount * stepMultiplier);
       },
       progressBarBackStyle () {
         return {
