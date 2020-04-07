@@ -225,10 +225,10 @@
       },
       progressBarBackStyle () {
         return {
-          backgroundColor: '#CCC',
+          backgroundColor: '#CCC !important',
           width: `${this.lastStepPercentage}%`,
           marginLeft: `${this.stepPercentage}%`,
-          color: '#CCC'
+          color: '#CCC !important'
         }
       },
       progressBarStyle () {
