@@ -6,10 +6,10 @@
       @keyup.right="focusNextTab"
       @keyup.left="focusPrevTab">
     <div class="row wizard-banner">
-      <div class="col-12 col-xs-12 col-sm-3 text-center my-auto py-3">
+      <div class="col-12 col-sm-6 col-md-4 text-center my-auto py-3">
         <slot name="logo">Logo</slot>
       </div>
-      <div class="col-12 col-xs-12 col-sm-3 offset-sm-6 text-center my-auto py-3">
+      <div class="col-12 col-sm-6 col-md-4 offset-md-4 text-center my-auto py-3">
         <slot name="cta">CTA</slot>
       </div>
     </div><!-- row wizard-banner -->
