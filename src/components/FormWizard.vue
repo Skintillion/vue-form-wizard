@@ -249,7 +249,7 @@
         type: String,
         default: 'md',
         validator: (value) => {
-          let acceptedValues = ['xs', 'sm', 'md', 'lg']
+          let acceptedValues = ['ss','xs', 'sm', 'md', 'lg']
           return acceptedValues.indexOf(value) !== -1
         }
       },
