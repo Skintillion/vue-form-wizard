@@ -5,7 +5,7 @@
       :class="[stepSize, {vertical: isVertical}]" 
       @keyup.right="focusNextTab"
       @keyup.left="focusPrevTab">
-    <div class="row">
+    <div class="row wizard-banner">
       <div class="col-12 col-xs-12 col-sm-3 text-center my-auto py-3">
         <slot name="logo">Logo</slot>
       </div>
