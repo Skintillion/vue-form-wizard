@@ -12,7 +12,7 @@
       <div class="col-12 col-xs-12 col-sm-3 offset-sm-6 text-center my-auto py-3">
         <slot name="cta">CTA</slot>
       </div>
-    </div><!-- row -->
+    </div><!-- row wizard-banner -->
     <div class="wizard-header" v-if="$slots['title']">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
