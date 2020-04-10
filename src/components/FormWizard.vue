@@ -19,7 +19,26 @@
         <p class="category">{{subtitle}}</p>
       </slot>
     </div><!-- wizard-header -->
-    <div class="wizard-navigation" :style="'min-height:' + stepHeight + 'px;'">
+    <div class="wizard-navigation" >
+      <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+        <slot name="step" v-for="(tab, index) in tabs"
+              :tab="tab"
+              :index="index"
+              :navigate-to-tab="navigateToTab"
+              :step-size="stepSize"
+              :transition="transition">
+          <wizard-step :tab="tab"
+                      :allow-skip="allowSkip"
+                      :step-size="stepSize"
+                      @click.native="navigateToTab(index)"
+                      @keyup.enter.native="navigateToTab(index)"
+                      :transition="transition"
+                      :index="index">
+          </wizard-step>
+        </slot>
+      </ul>
+    </div><!-- wizard-navigation -->
+    <div class="wizard-navigation wizard-navigation-dots">
       <div class="wizard-progress-with-circle" v-if="!isVertical">
         <div class="wizard-progress-bar wizard-progress-bar-back"
             :style="progressBarBackStyle"></div>
@@ -33,13 +52,14 @@
               :navigate-to-tab="navigateToTab"
               :step-size="stepSize"
               :transition="transition">
-          <wizard-step :tab="tab"
+          <wizard-step-dot :tab="tab"
+                      :allow-skip="allowSkip"
                       :step-size="stepSize"
                       @click.native="navigateToTab(index)"
                       @keyup.enter.native="navigateToTab(index)"
                       :transition="transition"
                       :index="index">
-          </wizard-step>
+          </wizard-step-dot>
         </slot>
       </ul>
     </div><!-- wizard-navigation -->
@@ -138,13 +158,15 @@
 <script>
   import WizardButton from './WizardButton.vue'
   import WizardStep from './WizardStep.vue'
+  import WizardStepDot from './WizardStepDot.vue'
   import {isPromise, findElementAndFocus, getFocusedTabIndex} from './helpers'
 
   export default {
     name: 'form-wizard',
     components: {
       WizardButton,
-      WizardStep
+      WizardStep,
+      WizardStepDot,
     },
     props: {
       id: {
@@ -219,6 +241,10 @@
         type: [String, Array],
         default: ''
       },
+      allowSkip: {
+        type: Boolean,
+        default: true
+      },
       stepSize: {
         type: String,
         default: 'md',
@@ -226,10 +252,6 @@
           let acceptedValues = ['xs', 'sm', 'md', 'lg']
           return acceptedValues.indexOf(value) !== -1
         }
-      },
-      stepHeight: {
-        type: String,
-        default: '50'
       },
       /**
        * Name of the transition when transition between steps
@@ -378,8 +400,13 @@
         })
       },
       navigateToTab (index) {
-        let validate = index > this.activeTabIndex
-        if (index <= this.maxStep) {
+        console.log("Shnav");
+        let validate = index > this.activeTabIndex;
+        console.log(validate);
+        console.log(this.maxStep);
+        console.log(this.allowSkip);
+        console.log((index <= this.maxStep || this.allowSkip));
+        if (index <= this.maxStep || this.allowSkip) {
           let cb = () => {
             if (validate && index - this.activeTabIndex > 1) {
               // validate all steps recursively until destination index
@@ -547,7 +574,7 @@
       },
       activateTabAndCheckStep (index) {
         this.activateTab(index)
-        if (index > this.maxStep) {
+        if (index > this.maxStep || this.allowSkip) {
           this.maxStep = index
         }
         this.activeTabIndex = index

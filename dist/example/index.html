@@ -10,7 +10,7 @@
   <body>
     <div id="app">
       <div class="col-xs-12 col-lg-8 col-lg-offset-2">
-        <form-wizard @on-complete="onComplete" step-size="ss" buttonLocation="chevron">
+        <form-wizard @on-complete="onComplete" step-size="ss" buttonLocation="chevron" :allow-skip="true">
             <tab-content title="Personal details"
                          icon="ti-user">
               My first tab content
@@ -18,6 +18,18 @@
             <tab-content title="Additional Info"
                          icon="ti-settings">
               My second tab content
+            </tab-content>
+            <tab-content title="Last step"
+                         icon="ti-check">
+              Yuhuuu! This seems pretty damn simple
+            </tab-content>
+            <tab-content title="Last step"
+                         icon="ti-check">
+              Yuhuuu! This seems pretty damn simple
+            </tab-content>
+            <tab-content title="Last step"
+                         icon="ti-check">
+              Yuhuuu! This seems pretty damn simple
             </tab-content>
             <tab-content title="Last step"
                          icon="ti-check">

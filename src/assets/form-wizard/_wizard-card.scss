@@ -89,7 +89,7 @@
   .wizard-navigation {
     .wizard-progress-with-circle {
       position: relative;
-      top: 40px;
+      top: 8px;
       height: 4px;
 
       .wizard-progress-bar {
@@ -99,6 +99,9 @@
         transition: width .3s ease;
       }
     }
+  }
+  .wizard-navigation-dots {
+    padding-top: 5px;
   }
   .clearfix::after {
     content: "";
@@ -152,7 +155,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    min-height: 140px;
   }
   .button-logo-flex {
     display: flex;
