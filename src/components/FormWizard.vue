@@ -1,6 +1,18 @@
 <template>
   <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
+    <div class="row wizard-display-flex">
+      <slot name="logo">
+        <div class="col-md-6 text-center">
+          Logo
+        </div>
+      </slot>
+      <slot name="cta">
+        <div class="col-md-6 text-center">
+          Button
+        </div>
+      </slot>
+    </div>
     <div class="wizard-header" v-if="$slots['title']">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
