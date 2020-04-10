@@ -71,7 +71,7 @@
         <slot v-bind="slotProps">
         </slot>
         <a 
-          v-if="!hideButtons && buttonLocation=='chevron'"
+          v-if="!hideButtons && buttonLocation=='chevron' && !isFirstStep"
           class="left carousel-control" 
           @click.prevent="prevTab"  
           :style="'background:none;color:'+chevronColor">
@@ -79,7 +79,7 @@
             <span class="sr-only">Previous</span>
         </a>
         <a 
-          v-if="!hideButtons && buttonLocation=='chevron'"
+          v-if="!hideButtons && buttonLocation=='chevron' && !isLastStep"
           class="right carousel-control" 
           @click.prevent="nextTab"  
           :style="'background:none;color:'+chevronColor">
@@ -265,6 +265,9 @@
       },
       tabCount () {
         return this.tabs.length
+      },
+      isFirstStep() {
+        return this.activeTabIndex === 0
       },
       isLastStep () {
         return this.activeTabIndex === this.tabCount - 1
