@@ -1,15 +1,15 @@
 <template>
   <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
-    <div class="row wizard-display-flex">
+    <div class="row button-logo-flex">
       <slot name="logo">
-        <div class="col-md-6 text-center">
+        <div class="col-md-3 text-center">
           Logo
         </div>
-      </slot>
-      <slot name="cta">
-        <div class="col-md-6 text-center">
-          Button
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-3 text-center">
+          CTA
         </div>
       </slot>
     </div>
