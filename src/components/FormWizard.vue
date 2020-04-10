@@ -98,23 +98,28 @@
 
       </slot>
     </div><!-- wizard-card-footer -->
-    <div class="row carousel wizard-tab-content">
+    <div class="row wizard-tab-content carousel">
       <slot v-bind="slotProps">
       </slot>
       <a 
         v-if="!hideButtons && buttonLocation=='chevron' && !isFirstStep"
-        class="left carousel-control" 
+        class="carousel-control-prev" 
         @click.prevent="prevTab"  
-        :style="'background:none;color:'+chevronColor">
-          <span :class="chevronIcon + chevronIconLeftSuffix" aria-hidden="true"></span>
+        >
+          <i 
+            :class="chevronIcon + chevronIconLeftSuffix" 
+            aria-hidden="true" 
+            :style="'color:'+chevronColor+';font-size:'+chevronSize+'em'"></i>
           <span class="sr-only">Previous</span>
       </a>
       <a 
         v-if="!hideButtons && buttonLocation=='chevron' && !isLastStep"
-        class="right carousel-control" 
-        @click.prevent="nextTab"  
-        :style="'background:none;color:'+chevronColor">
-          <span :class="chevronIcon + chevronIconRightSuffix" aria-hidden="true"></span>
+        class="carousel-control-next" 
+        @click.prevent="nextTab" >
+          <i 
+            :class="chevronIcon + chevronIconRightSuffix" 
+            aria-hidden="true" 
+            :style="'color:'+chevronColor+';font-size:'+chevronSize+'em'"></i>
           <span class="sr-only">Next</span>
       </a>
     </div>
@@ -191,7 +196,7 @@
       },
       chevronIcon: {
         type: String,
-        default: 'glyphicon glyphicon-chevron-'
+        default: 'fa fa-chevron-'
       },
       chevronIconLeftSuffix: {
         type: String,
@@ -200,6 +205,10 @@
       chevronIconRightSuffix: {
         type: String,
         default: 'right'
+      },
+      chevronSize: {
+        type: String,
+        default: '2.5'
       },
       nextButtonText: {
         type: String,
