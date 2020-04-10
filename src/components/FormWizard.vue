@@ -1,8 +1,8 @@
 <template>
   <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
-    <div class="row button-logo-flex">
-      <slot name="logo">
+    <slot name="logo">
+      <div class="row button-logo-flex">
         <div class="col-md-3 text-center">
           Logo
         </div>
@@ -11,8 +11,8 @@
         <div class="col-md-3 text-center">
           CTA
         </div>
-      </slot>
-    </div>
+      </div>
+    </slot>
     <div class="wizard-header" v-if="$slots['title']">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -20,29 +20,31 @@
       </slot>
     </div>
     <div class="wizard-navigation">
-      <div class="wizard-display-flex">
-        <div class="wizard-progress-with-circle" v-if="!isVertical">
-          <div class="wizard-progress-bar wizard-progress-bar-back"
-              :style="progressBarBackStyle"></div>
-          <div class="wizard-progress-bar"
-              :style="progressBarStyle"></div>
+      <div class="row wizard-display-flex">
+        <div class="col-md-12">
+          <div class="wizard-progress-with-circle" v-if="!isVertical">
+            <div class="wizard-progress-bar wizard-progress-bar-back"
+                :style="progressBarBackStyle"></div>
+            <div class="wizard-progress-bar"
+                :style="progressBarStyle"></div>
+          </div>
+          <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+            <slot name="step" v-for="(tab, index) in tabs"
+                  :tab="tab"
+                  :index="index"
+                  :navigate-to-tab="navigateToTab"
+                  :step-size="stepSize"
+                  :transition="transition">
+              <wizard-step :tab="tab"
+                          :step-size="stepSize"
+                          @click.native="navigateToTab(index)"
+                          @keyup.enter.native="navigateToTab(index)"
+                          :transition="transition"
+                          :index="index">
+              </wizard-step>
+            </slot>
+          </ul>
         </div>
-        <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
-          <slot name="step" v-for="(tab, index) in tabs"
-                :tab="tab"
-                :index="index"
-                :navigate-to-tab="navigateToTab"
-                :step-size="stepSize"
-                :transition="transition">
-            <wizard-step :tab="tab"
-                        :step-size="stepSize"
-                        @click.native="navigateToTab(index)"
-                        @keyup.enter.native="navigateToTab(index)"
-                        :transition="transition"
-                        :index="index">
-            </wizard-step>
-          </slot>
-        </ul>
       </div>
       <div class="wizard-card-footer clearfix" v-if="!hideButtons && buttonLocation=='top'">
         <slot name="footer"
