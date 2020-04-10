@@ -1,106 +1,102 @@
 <template>
-  <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
-       @keyup.left="focusPrevTab">
-    <slot name="logo">
-      <div class="row button-logo-flex">
-        <div class="col-md-3 text-center">
-          Logo
-        </div>
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-3 text-center">
-          CTA
-        </div>
+  <div 
+      :id="id ? id : ''" 
+      class="vue-form-wizard" 
+      :class="[stepSize, {vertical: isVertical}]" 
+      @keyup.right="focusNextTab"
+      @keyup.left="focusPrevTab">
+    <div class="row">
+      <div class="col-12 col-xs-12 col-sm-3 text-center">
+        <slot name="logo">Logo</slot>
       </div>
-    </slot>
+      <div class="col-12 col-xs-12 col-sm-3 col-sm-offset-6 text-center">
+        <slot name="cta">CTA</slot>
+      </div>
+    </div><!-- row -->
     <div class="wizard-header" v-if="$slots['title']">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
         <p class="category">{{subtitle}}</p>
       </slot>
-    </div>
-    <div class="wizard-navigation">
-      <div class="row wizard-display-flex">
-        <div class="col-md-12">
-          <div class="wizard-progress-with-circle" v-if="!isVertical">
-            <div class="wizard-progress-bar wizard-progress-bar-back"
-                :style="progressBarBackStyle"></div>
-            <div class="wizard-progress-bar"
-                :style="progressBarStyle"></div>
-          </div>
-          <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
-            <slot name="step" v-for="(tab, index) in tabs"
-                  :tab="tab"
-                  :index="index"
-                  :navigate-to-tab="navigateToTab"
-                  :step-size="stepSize"
-                  :transition="transition">
-              <wizard-step :tab="tab"
-                          :step-size="stepSize"
-                          @click.native="navigateToTab(index)"
-                          @keyup.enter.native="navigateToTab(index)"
-                          :transition="transition"
-                          :index="index">
-              </wizard-step>
-            </slot>
-          </ul>
-        </div>
-      </div>
-      <div class="wizard-card-footer clearfix" v-if="!hideButtons && buttonLocation=='top'">
-        <slot name="footer"
-              v-bind="slotProps">
-          <div class="wizard-footer-left">
-            <span @click="prevTab" @keyup.enter="prevTab" v-if="displayPrevButton" role="button" tabindex="0">
-              <slot name="prev" v-bind="slotProps">
-                <wizard-button :style="fillButtonStyle"
-                              :disabled="loading">
-                  {{backButtonText}}
-                </wizard-button>
-              </slot>
-            </span>
-            <slot name="custom-buttons-left" v-bind="slotProps"></slot>
-          </div>
-          <div class="wizard-footer-right">
-            <slot name="custom-buttons-right" v-bind="slotProps"></slot>
-            <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
-                <slot name="finish" v-bind="slotProps">
-                <wizard-button :style="fillButtonStyle">
-                  {{finishButtonText}}
-                </wizard-button>
-              </slot>
-            </span>
-            <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
-            <slot name="next" v-bind="slotProps">
+    </div><!-- wizard-header -->
+    <div class="wizard-navigation" :style="'min-height:' + stepHeight + 'px;'">
+      <div class="wizard-progress-with-circle" v-if="!isVertical">
+        <div class="wizard-progress-bar wizard-progress-bar-back"
+            :style="progressBarBackStyle"></div>
+        <div class="wizard-progress-bar"
+            :style="progressBarStyle"></div>
+      </div><!-- wizard-progress-with-circle -->
+      <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+        <slot name="step" v-for="(tab, index) in tabs"
+              :tab="tab"
+              :index="index"
+              :navigate-to-tab="navigateToTab"
+              :step-size="stepSize"
+              :transition="transition">
+          <wizard-step :tab="tab"
+                      :step-size="stepSize"
+                      @click.native="navigateToTab(index)"
+                      @keyup.enter.native="navigateToTab(index)"
+                      :transition="transition"
+                      :index="index">
+          </wizard-step>
+        </slot>
+      </ul>
+    </div><!-- wizard-navigation -->
+    <div class="wizard-card-footer clearfix" v-if="!hideButtons && buttonLocation=='top'">
+      <slot name="footer"
+            v-bind="slotProps">
+        <div class="wizard-footer-left">
+          <span @click="prevTab" @keyup.enter="prevTab" v-if="displayPrevButton" role="button" tabindex="0">
+            <slot name="prev" v-bind="slotProps">
               <wizard-button :style="fillButtonStyle"
-                              :disabled="loading">
-                {{nextButtonText}}
+                            :disabled="loading">
+                {{backButtonText}}
               </wizard-button>
             </slot>
           </span>
-          </div>
+          <slot name="custom-buttons-left" v-bind="slotProps"></slot>
+        </div>
+        <div class="wizard-footer-right">
+          <slot name="custom-buttons-right" v-bind="slotProps"></slot>
+          <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
+              <slot name="finish" v-bind="slotProps">
+              <wizard-button :style="fillButtonStyle">
+                {{finishButtonText}}
+              </wizard-button>
+            </slot>
+          </span>
+          <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
+          <slot name="next" v-bind="slotProps">
+            <wizard-button :style="fillButtonStyle"
+                            :disabled="loading">
+              {{nextButtonText}}
+            </wizard-button>
+          </slot>
+        </span>
+        </div>
 
-        </slot>
-      </div>
-      <div class="wizard-tab-content">
-        <slot v-bind="slotProps">
-        </slot>
-        <a 
-          v-if="!hideButtons && buttonLocation=='chevron' && !isFirstStep"
-          class="left carousel-control" 
-          @click.prevent="prevTab"  
-          :style="'background:none;color:'+chevronColor">
-            <span :class="chevronIcon + chevronIconLeftSuffix" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a 
-          v-if="!hideButtons && buttonLocation=='chevron' && !isLastStep"
-          class="right carousel-control" 
-          @click.prevent="nextTab"  
-          :style="'background:none;color:'+chevronColor">
-            <span :class="chevronIcon + chevronIconRightSuffix" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-      </div>
+      </slot>
+    </div><!-- wizard-card-footer -->
+    <div class="row carousel wizard-tab-content">
+      <slot v-bind="slotProps">
+      </slot>
+      <a 
+        v-if="!hideButtons && buttonLocation=='chevron' && !isFirstStep"
+        class="left carousel-control" 
+        @click.prevent="prevTab"  
+        :style="'background:none;color:'+chevronColor">
+          <span :class="chevronIcon + chevronIconLeftSuffix" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+      </a>
+      <a 
+        v-if="!hideButtons && buttonLocation=='chevron' && !isLastStep"
+        class="right carousel-control" 
+        @click.prevent="nextTab"  
+        :style="'background:none;color:'+chevronColor">
+          <span :class="chevronIcon + chevronIconRightSuffix" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+      </a>
     </div>
 
     <div class="wizard-card-footer clearfix" v-if="!hideButtons && buttonLocation=='bottom'">
@@ -110,33 +106,31 @@
           <span @click="prevTab" @keyup.enter="prevTab" v-if="displayPrevButton" role="button" tabindex="0">
             <slot name="prev" v-bind="slotProps">
               <wizard-button :style="fillButtonStyle"
-                             :disabled="loading">
+                              :disabled="loading">
                 {{backButtonText}}
               </wizard-button>
             </slot>
           </span>
           <slot name="custom-buttons-left" v-bind="slotProps"></slot>
-        </div>
-
+        </div><!-- wizard-footer-left -->
         <div class="wizard-footer-right">
           <slot name="custom-buttons-right" v-bind="slotProps"></slot>
           <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
               <slot name="finish" v-bind="slotProps">
-               <wizard-button :style="fillButtonStyle">
+                <wizard-button :style="fillButtonStyle">
                 {{finishButtonText}}
               </wizard-button>
             </slot>
           </span>
           <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
-           <slot name="next" v-bind="slotProps">
-             <wizard-button :style="fillButtonStyle"
+            <slot name="next" v-bind="slotProps">
+              <wizard-button :style="fillButtonStyle"
                             :disabled="loading">
               {{nextButtonText}}
-             </wizard-button>
-           </slot>
-         </span>
-        </div>
-
+              </wizard-button>
+            </slot>
+          </span>
+        </div><!-- wizard-footer-right -->
       </slot>
     </div>
   </div>
@@ -232,6 +226,10 @@
           let acceptedValues = ['xs', 'sm', 'md', 'lg']
           return acceptedValues.indexOf(value) !== -1
         }
+      },
+      stepHeight: {
+        type: String,
+        default: '50'
       },
       /**
        * Name of the transition when transition between steps

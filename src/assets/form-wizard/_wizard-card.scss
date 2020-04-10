@@ -148,18 +148,18 @@
 
     }
   }
-  .row.wizard-display-flex {
+  .wizard-display-flex {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     min-height: 140px;
   }
-  .row.button-logo-flex {
+  .button-logo-flex {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
-  .row.wizard-display-flex > [class*='col-'] {
+  .wizard-display-flex > [class*='col-'] {
     flex-grow: 1;
   }
 }
