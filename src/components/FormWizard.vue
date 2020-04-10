@@ -9,7 +9,7 @@
       <div class="col-12 col-xs-12 col-sm-3 text-center">
         <slot name="logo">Logo</slot>
       </div>
-      <div class="col-12 col-xs-12 col-sm-3 col-sm-offset-6 text-center">
+      <div class="col-12 col-xs-12 col-sm-3 offset-sm-6 text-center">
         <slot name="cta">CTA</slot>
       </div>
     </div><!-- row -->

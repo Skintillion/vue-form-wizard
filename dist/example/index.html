@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>webpack-vue-clean</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./vue-form-wizard.min.css">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   </head>
   <body>
     <div id="app">
-      <div class="col-xs-12 col-lg-8 col-lg-offset-2">
+      <div class="col-xs-12 col-lg-8 offset-lg-2">
         <form-wizard @on-complete="onComplete" step-size="ss" buttonLocation="chevron" :allow-skip="true">
             <tab-content title="Personal details"
                          icon="ti-user">
