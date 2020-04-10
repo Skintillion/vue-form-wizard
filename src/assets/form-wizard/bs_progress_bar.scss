@@ -20,6 +20,6 @@
   @include transition(width .6s ease);
 }
 .vue-form-wizard .wizard-progress-bar-back {
-  width: 0%;
   color: #CCC !important;
+  background-color: #CCC;  
 }

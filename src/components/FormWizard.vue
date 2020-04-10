@@ -8,49 +8,88 @@
       </slot>
     </div>
     <div class="wizard-navigation">
-      <div class="row wizard-display-flex">
-        <div class="col-md-2 text-center">
-          <slot name="logo">
-            Logo
-          </slot> 
+      <div class="wizard-display-flex">
+        <div class="wizard-progress-with-circle" v-if="!isVertical">
+          <div class="wizard-progress-bar wizard-progress-bar-back"
+              :style="progressBarBackStyle"></div>
+          <div class="wizard-progress-bar"
+              :style="progressBarStyle"></div>
         </div>
-        <div class="col-md-8">
-          <div class="wizard-progress-with-circle" v-if="!isVertical">
-            <div class="wizard-progress-bar wizard-progress-bar-back"
-                :style="progressBarBackStyle"></div>
-            <div class="wizard-progress-bar"
-                :style="progressBarStyle"></div>
+        <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+          <slot name="step" v-for="(tab, index) in tabs"
+                :tab="tab"
+                :index="index"
+                :navigate-to-tab="navigateToTab"
+                :step-size="stepSize"
+                :transition="transition">
+            <wizard-step :tab="tab"
+                        :step-size="stepSize"
+                        @click.native="navigateToTab(index)"
+                        @keyup.enter.native="navigateToTab(index)"
+                        :transition="transition"
+                        :index="index">
+            </wizard-step>
+          </slot>
+        </ul>
+      </div>
+      <div class="wizard-card-footer clearfix" v-if="!hideButtons && buttonLocation=='top'">
+        <slot name="footer"
+              v-bind="slotProps">
+          <div class="wizard-footer-left">
+            <span @click="prevTab" @keyup.enter="prevTab" v-if="displayPrevButton" role="button" tabindex="0">
+              <slot name="prev" v-bind="slotProps">
+                <wizard-button :style="fillButtonStyle"
+                              :disabled="loading">
+                  {{backButtonText}}
+                </wizard-button>
+              </slot>
+            </span>
+            <slot name="custom-buttons-left" v-bind="slotProps"></slot>
           </div>
-          <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
-            <slot name="step" v-for="(tab, index) in tabs"
-                  :tab="tab"
-                  :index="index"
-                  :navigate-to-tab="navigateToTab"
-                  :step-size="stepSize"
-                  :transition="transition">
-              <wizard-step :tab="tab"
-                          :step-size="stepSize"
-                          @click.native="navigateToTab(index)"
-                          @keyup.enter.native="navigateToTab(index)"
-                          :transition="transition"
-                          :index="index">
-              </wizard-step>
+          <div class="wizard-footer-right">
+            <slot name="custom-buttons-right" v-bind="slotProps"></slot>
+            <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
+                <slot name="finish" v-bind="slotProps">
+                <wizard-button :style="fillButtonStyle">
+                  {{finishButtonText}}
+                </wizard-button>
+              </slot>
+            </span>
+            <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
+            <slot name="next" v-bind="slotProps">
+              <wizard-button :style="fillButtonStyle"
+                              :disabled="loading">
+                {{nextButtonText}}
+              </wizard-button>
             </slot>
-          </ul>
-        </div>
-        <div class="col-md-2 text-center">
-          <slot name="button">
-            Button
-          </slot> 
-        </div>
+          </span>
+          </div>
+
+        </slot>
       </div>
       <div class="wizard-tab-content">
         <slot v-bind="slotProps">
         </slot>
+        <a 
+          v-if="!hideButtons && buttonLocation=='chevron'"
+          class="left carousel-control" 
+          @click.prevent="prevTab"  
+          :style="'background:none;color:'+chevronColor">
+            <span :class="chevronIcon + chevronIconLeftSuffix" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a 
+          v-if="!hideButtons && buttonLocation=='chevron'"
+          class="right carousel-control" 
+          @click.prevent="nextTab"  
+          :style="'background:none;color:'+chevronColor">
+            <span :class="chevronIcon + chevronIconRightSuffix" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
       </div>
     </div>
 
-    <div class="wizard-card-footer clearfix" v-if="!hideButtons">
+    <div class="wizard-card-footer clearfix" v-if="!hideButtons && buttonLocation=='bottom'">
       <slot name="footer"
             v-bind="slotProps">
         <div class="wizard-footer-left">
@@ -111,6 +150,26 @@
       subtitle: {
         type: String,
         default: 'Split a complicated flow in multiple steps'
+      },
+      buttonLocation: {
+        type: String,
+        default: 'chevron',
+      },
+      chevronColor: {
+        type: String,
+        default: 'blue'
+      },
+      chevronIcon: {
+        type: String,
+        default: 'glyphicon glyphicon-chevron-'
+      },
+      chevronIconLeftSuffix: {
+        type: String,
+        default: 'left'
+      },
+      chevronIconRightSuffix: {
+        type: String,
+        default: 'right'
       },
       nextButtonText: {
         type: String,
