@@ -6,10 +6,10 @@
       @keyup.right="focusNextTab"
       @keyup.left="focusPrevTab">
     <div class="row">
-      <div class="col-12 col-xs-12 col-sm-3 text-center">
+      <div class="col-12 col-xs-12 col-sm-3 text-center my-auto">
         <slot name="logo">Logo</slot>
       </div>
-      <div class="col-12 col-xs-12 col-sm-3 offset-sm-6 text-center">
+      <div class="col-12 col-xs-12 col-sm-3 offset-sm-6 text-center my-auto">
         <slot name="cta">CTA</slot>
       </div>
     </div><!-- row -->
@@ -103,7 +103,7 @@
       </slot>
       <a 
         v-if="!hideButtons && buttonLocation=='chevron' && !isFirstStep"
-        class="carousel-control-prev" 
+        class="carousel-control-prev wizard-chevron" 
         @click.prevent="prevTab"  
         >
           <i 
@@ -114,7 +114,7 @@
       </a>
       <a 
         v-if="!hideButtons && buttonLocation=='chevron' && !isLastStep"
-        class="carousel-control-next" 
+        class="carousel-control-next wizard-chevron" 
         @click.prevent="nextTab" >
           <i 
             :class="chevronIcon + chevronIconRightSuffix" 
